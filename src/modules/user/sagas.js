@@ -1,5 +1,5 @@
 import { take, call, put, select, fork, cancel, takeLatest } from 'redux-saga/effects';
-import axios from '../../axios'
+import api from '../../api'
 import actions from './actions'
 
 export function* loginFlow() {
@@ -12,7 +12,7 @@ export function* loginFlow() {
 
 function* authorize(name, password) {
   try {
-    const res = yield call(axios.post, '/user/login', { name, password });
+    const res = yield call(api.user.login, name, password);
     let actionType = actions.USER_LOGIN_ERROR;
     let data = res.data
     if (res.status === 200) {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavigationActions } from 'react-navigation';
 import {
   View,
   Text,
@@ -39,20 +40,19 @@ class Main extends Component {
     super(props);
   }
 
+  jumpLogin = () => {
+    this.props.navigation.dispatch(
+      NavigationActions.navigate({ routeName: 'Login' })
+    )
+  }
+
   render() {
-    console.log(this.props)
-    const { userLogin } = this.props
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+        <Button
+          onPress={this.jumpLogin}
+          title='jump'
+        />
       </View>
     );
   }

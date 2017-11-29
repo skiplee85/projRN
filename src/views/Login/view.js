@@ -40,7 +40,6 @@ class Main extends Component {
   }
 
   render() {
-    console.log(this.props)
     const { userLogin } = this.props
     return (
       <View style={styles.container}>
