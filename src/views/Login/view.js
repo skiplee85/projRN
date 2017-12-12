@@ -39,12 +39,17 @@ class Main extends Component {
     super(props);
   }
 
-  render() {
+  login = (name, pwd) => {
     const { userLogin } = this.props
+    console.log(name, pwd)
+    userLogin(name, pwd)
+  }
+
+  render() {
     return (
       <View style={styles.container}>
         <Button
-          onPress={userLogin.bind(this,'test123456','123456')}
+          onPress={this.login.bind(this, 'test123456', '123456')}
           title='login'
         />
       </View>

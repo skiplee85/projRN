@@ -1,4 +1,5 @@
 import { applyMiddleware, createStore, compose, combineReducers } from 'redux';
+import logger from 'redux-logger'
 import createSagaMiddleware from 'redux-saga'
 import { persistStore, autoRehydrate } from 'redux-persist';
 import { AsyncStorage } from 'react-native';
@@ -13,6 +14,10 @@ const middlewares = [
   thunk,
   sagaMiddleware,
 ];
+
+if (__DEV__) {
+  middlewares.push(logger)
+}
 
 let enhancer = [
 ];
@@ -38,7 +43,7 @@ const configureStore = (initialState = {}) => {
 
   // Reducer注入
   store.injectReducer = (key, reducer) => {
-    if (Reflect.has(reducers, key)) return;
+    if (reducers[key]) return;
 
     reducers[key] = reducer;
     store.replaceReducer(makeRootReducer(reducers));
@@ -49,7 +54,7 @@ const configureStore = (initialState = {}) => {
   };
 
   store.injectSagas(sagas);
-
+  
   return store
 }
 
