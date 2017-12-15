@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavigationActions } from 'react-navigation';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
   View,
   Text,
@@ -41,14 +42,16 @@ class Main extends Component {
   }
 
   jumpLogin = () => {
-    this.props.navigation.dispatch(
-      NavigationActions.navigate({ routeName: 'Login' })
-    )
+    this.props.navigation.navigate('Login')
   }
 
   render() {
     return (
       <View style={styles.container}>
+        <Ionicons
+          name='ios-home'
+          size={26}
+        />
         <Button
           onPress={this.jumpLogin}
           title='jump'
