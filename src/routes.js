@@ -1,9 +1,9 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Main from './views/Main'
-import Login from './views/Login'
+import Main from './pages/Main'
+import Login from './pages/Login'
 import px2dp from './util/px2dp';
 
 const defaultRoute = 'App'
@@ -16,6 +16,9 @@ const routes = (store) => {
   const routesMap = {
     Login: {
       screen: loginPage,
+      navigationOptions: {
+        title: '登录',
+      },
     },
   };
 
@@ -26,6 +29,7 @@ const routes = (store) => {
       screen: mainPage,
       path: '/',
       navigationOptions: {
+        title: '首页',
         tabBarLabel: '首页',
         tabBarIcon: ({ tintColor, focused }) => (
           <Ionicons
@@ -40,6 +44,7 @@ const routes = (store) => {
       screen: mainPage,
       path: '/profile',
       navigationOptions: {
+        title: '发现',
         tabBarLabel: '发现',
         tabBarIcon: ({ tintColor, focused }) => (
           <Ionicons
@@ -54,6 +59,7 @@ const routes = (store) => {
       screen: mainPage,
       path: '/profile',
       navigationOptions: {
+        title: '消息',
         tabBarLabel: '消息',
         tabBarIcon: ({ tintColor, focused }) => (
           <Ionicons
@@ -68,6 +74,7 @@ const routes = (store) => {
       screen: mainPage,
       path: '/profile',
       navigationOptions: {
+        title: '我',
         tabBarLabel: '我',
         tabBarIcon: ({ tintColor, focused }) => (
           <Ionicons
@@ -84,10 +91,17 @@ const routes = (store) => {
     tabBarOptions: {
       showIcon: true,
       activeTintColor: 'rgb(22,131,251)',
-      inactiveTintColor:'#a9a9a9',
+      inactiveTintColor: '#a9a9a9',
       labelStyle: {
         fontSize: px2dp(12),
-        marginTop: 0,
+        ...Platform.select({
+          android: {
+            marginTop: 0,
+          },
+        }),
+      },
+      tabStyle: {
+        paddingTop: px2dp(10)
       },
       style: styles.tabbar,
     }
@@ -96,21 +110,29 @@ const routes = (store) => {
   const AppNavigator = StackNavigator({
     App: {
       screen: TabNav,
+      navigationOptions: {
+        headerMode:'float',
+      },
     },
     ...routesMap,
   }, {
-    initialRouteName: defaultRoute,
-    headerMode: 'none',
-  });
+      initialRouteName: defaultRoute,
+      // headerMode: 'none',
+    });
 
   return AppNavigator;
 }
 
 const styles = StyleSheet.create({
   tabbar: {
-    height: px2dp(60),
+    height: px2dp(49),
     justifyContent: 'center',
     backgroundColor: '#fff',
+    ...Platform.select({
+      ios: {
+        alignItems: 'center',
+      },
+    }),
   },
 });
 
